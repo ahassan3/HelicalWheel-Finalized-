@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace Helical_Wheel_App.Droid
 {
-    [Activity(ScreenOrientation = ScreenOrientation.Portrait, Label = "Helical Wheel", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(ScreenOrientation = ScreenOrientation.Portrait, Label = "Helical Wheel", Icon = "@drawable/Icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
