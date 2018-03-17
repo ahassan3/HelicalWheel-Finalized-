@@ -69,7 +69,7 @@ namespace Helical_Wheel_App
             // set the canvas
             var canvas = surface.Canvas;
             // set the background color
-            canvas.Clear(SKColors.FloralWhite);
+            canvas.Clear(SKColors.White);
             //canvasView.HeightRequest = .1 * App.ScreenHeight;
             // set width and height
             int width = args.Info.Width;
@@ -79,6 +79,8 @@ namespace Helical_Wheel_App
             //scale i
             var percentDiff = (App.ScreenHeight / ScaleFactor);
             int modify = 0;
+            int numFactors = 0;
+            int incr = 19;
             float percentToMinimize;
             if (AminoSequence.Contains(","))
             {
@@ -88,11 +90,17 @@ namespace Helical_Wheel_App
             {
                 modify = AminoSequence.ToCharArray().Count();
             }
-            modify = (int)Math.Floor((double)(modify / 19));
-            percentToMinimize = (float)(1 - (modify * .1));
+            for(int i = 0; i<= modify; i++)
+            {
+                if(i % incr == 0)
+                {
+                    numFactors += 1;
+                    incr += 18;
+                }
+            }
+            percentToMinimize = (float)(1 - (numFactors * .12));
             percentToMinimize = percentToMinimize > .4 ? percentToMinimize : .4f;
             canvas.Scale((width / 200f) * percentDiff * percentToMinimize);
-            //canvas.Scale((float)App.ScreenWidth, .55f * (float)App.ScreenHeight);
             // drawing the circle at the mid-point
             canvas.DrawCircle(0, 0,RADIUS * percentDiff, Wheel);
             string aminos = AminoSequence;
