@@ -121,21 +121,24 @@ namespace Helical_Wheel_App
             bool invalidAminoAcid = false;
             var structErrors = new List<string>();
             StructureAnalysis.Text = "The following issues were found: \n";
+            var foundProline = "-Found one or more prolines present on the wheel";
+            var invalidAmino = "-Your helical structure contains one or more invalid amino acid(s).";
             StructureAnalysis.TextColor = Color.Red;
+            List<KeyValuePair<string, string>> foundAminos = new List<KeyValuePair<string, string>>();
             foreach (var item in aminoList)
             {
                 var countItem = item.Key.ToCharArray().ToList().Where(x => char.IsDigit(x)).Count();
                 if ((item.Key.Substring(0,1).ToLower().Equals("p") || item.Key.Substring(0,item.Key.Length - countItem).ToLower().Equals("pro")) && !prolineFound)
                 {
                     prolineFound = true;
-                    structErrors.Add("-Found one or more prolines present on the wheel");
+                    structErrors.Add(foundProline);
                     continue;
                 }
                 if ((item.Key.Length - countItem) > 2 && !invalidAminoAcid)
                 {
                     if (!aminoClass.IsAminoAcid(item.Key.Substring(0,item.Key.Length - countItem)))
                     {
-                        structErrors.Add("-Your helical structure contains one or more invalid amino acid(s).");
+                        structErrors.Add(invalidAmino);
                         invalidAminoAcid = true;
                         continue;
                     }
@@ -152,7 +155,6 @@ namespace Helical_Wheel_App
                 }
                 List<KeyValuePair<string, Point>> templist = aminoList.Where(x => !x.Key.Equals(item.Key)).ToList();
                 var closeAminos = templist.Where(x => Math.Sqrt(Math.Pow((x.Value.X - item.Value.X), 4) + Math.Pow((x.Value.Y - item.Value.Y), 2)) <= 4);
-                List<KeyValuePair<string,string>> foundAminos = new List<KeyValuePair<string, string>>();
                 foreach (var item2 in closeAminos)
                 {
                     var countItem2 = item2.Key.ToCharArray().ToList().Where(x => char.IsDigit(x));
@@ -171,6 +173,16 @@ namespace Helical_Wheel_App
             }
             if (structErrors.Any())
             {
+                if (structErrors.Contains(invalidAmino))
+                {
+                    StructureAnalysis.Text += invalidAmino + "\n";
+                    structErrors.Remove(invalidAmino);
+                }
+                if (structErrors.Contains(foundProline))
+                {
+                    StructureAnalysis.Text += foundProline + "\n";
+                    structErrors.Remove(foundProline);
+                }
                 foreach (var error in structErrors)
                 {
                     StructureAnalysis.Text += error + "\n";
