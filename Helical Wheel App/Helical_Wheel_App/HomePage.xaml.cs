@@ -148,7 +148,7 @@ namespace Helical_Wheel_App
                 {
                     if (!aminoClass.IsAminoAcid(null,item.Key.ToCharArray()[0]))
                     {
-                        structErrors.Add("-Your helical structure contains one or more invalid amino acid(s).");
+                        structErrors.Add(invalidAmino);
                         invalidAminoAcid = true;
                         continue;
                     }
