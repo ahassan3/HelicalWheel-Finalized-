@@ -102,7 +102,7 @@ namespace Helical_Wheel_App
             percentToMinimize = percentToMinimize > .4 ? percentToMinimize : .4f;
             canvas.Scale((width / 200f) * percentDiff * percentToMinimize);
             // drawing the circle at the mid-point
-            canvas.DrawCircle(0, 0,App.ScreenHeight / 12, Wheel);
+            canvas.DrawCircle(0, 0,RADIUS * percentDiff, Wheel);
             string aminos = AminoSequence;
             // determine if the input is 1 or 3 letter abbreviations
             if (aminos.Contains(","))
@@ -138,17 +138,17 @@ namespace Helical_Wheel_App
                     {
                         //draw line
                         if(incr < 18)
-                            canvas.DrawLine(x, y, (float)((App.ScreenHeight / 12) * Math.Cos(angle * Math.PI / 180F)), (float)((App.ScreenHeight / 12) * Math.Sin(angle * Math.PI / 180F)), Line);
+                            canvas.DrawLine(x, y, (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F)), (float)((App.ScreenHeight / 8.863492) * Math.Sin(angle * Math.PI / 180F)), Line);
                         // check if polar or not then draw the circle accordingly
                         if (polarity)
-                            canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - 6, y + 4, PolarLetters);
+                            canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - (6 * percentDiff), y + (4 * percentDiff), PolarLetters);
                         else
-                            canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - 6, y + 4, NonPolarLetters);
+                            canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - (6 * percentDiff), y + (4 * percentDiff), NonPolarLetters);
                         incr += 1;
                     }
                     // determine the x & y coordinates using this formula
-                    x = (float)((App.ScreenHeight / 12) * Math.Cos(angle * Math.PI / 180F));
-                    y = (float)((App.ScreenHeight / 12) * Math.Sin(angle * Math.PI / 180F));
+                    x = (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F));
+                    y = (float)((RADIUS * percentDiff) * Math.Sin(angle * Math.PI / 180F));
                     // add x & y coordinates to my global variable
                     HelicalStructure.Add(new KeyValuePair<string, Point>(item.ToString().ToUpper() + incr, new Point(x,y)) );
                     if(incr % scaleModifier == 0)
@@ -156,11 +156,11 @@ namespace Helical_Wheel_App
                         modIncrementer += 1;
                         scaleModifier = scaleModifier + 18;
                     }
-                    xModifier = x > 0? 13f * modIncrementer : -13f * modIncrementer;
-                    yModifier = y > 0? 13f * modIncrementer : -13f * modIncrementer;
+                    xModifier = x > 0? 13f * modIncrementer * percentDiff : -13f * modIncrementer * percentDiff;
+                    yModifier = y > 0? 13f * modIncrementer * percentDiff : -13f * modIncrementer * percentDiff;
                     if(Math.Abs(x) < 5 && modIncrementer > 0)
                     {
-                        yModifier = yModifier > 0 ? (yModifier - .5f) + (6 * modIncrementer) : (yModifier + .5f) - (6 * modIncrementer);
+                        yModifier = yModifier > 0 ? (yModifier - (.5f * percentDiff)) + (6 * modIncrementer * percentDiff) : (yModifier + (.5f * percentDiff)) - (6 * modIncrementer * percentDiff);
                         xModifier = 0;
                     }
                     x += xModifier;
@@ -168,13 +168,13 @@ namespace Helical_Wheel_App
                     if (aminoClass.IsAminoAcid(null, item))
                     {
                         if (polarity = aminoClass.IsPolar(null, item))
-                            canvas.DrawCircle(x, y, (App.ScreenHeight / 120), PolarAminoAcid);
+                            canvas.DrawCircle(x, y, (AMINORADIUS * percentDiff), PolarAminoAcid);
                         else
-                            canvas.DrawCircle(x, y, (App.ScreenHeight / 120), NonPolarAminoAcid);
+                            canvas.DrawCircle(x, y, (AMINORADIUS * percentDiff), NonPolarAminoAcid);
                     }
                     else
                     {
-                        canvas.DrawCircle(x, y, (App.ScreenHeight / 120), InvalidAminoAcid);
+                        canvas.DrawCircle(x, y, (AMINORADIUS * percentDiff), InvalidAminoAcid);
                     }
                     angle += 100;
                     if (angle > 360)
@@ -185,9 +185,9 @@ namespace Helical_Wheel_App
             if (char.IsLetter(lastChar))
             {
                 if (polarity)
-                    canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - 6, y + 4, PolarLetters);
+                    canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - (6 * percentDiff), y + (4 * percentDiff), PolarLetters);
                 else
-                    canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - 6, y + 4, NonPolarLetters);
+                    canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - (6 * percentDiff), y + (4 * percentDiff), NonPolarLetters);
             }
         }
         public void HelicalWheelBuilderThreeLetter(string aminoAcids, SKCanvas canvas)
@@ -203,8 +203,7 @@ namespace Helical_Wheel_App
             bool polarity = false;
             string lastAmino ="";
             int incr = 1;
-            //var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor);
-            //var percentDiff = (App.ScreenHeight / ScaleFactor);
+            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor);
             foreach (var item in listAminos)
             {
                 if (!string.IsNullOrWhiteSpace(item))
@@ -212,26 +211,26 @@ namespace Helical_Wheel_App
                     if (!string.IsNullOrWhiteSpace(lastAmino))
                     {
                         if(incr < 18)
-                            canvas.DrawLine(xval, yval, (float)((App.ScreenWidth / 120) * Math.Cos(angle * Math.PI / 180F)), (float)((App.ScreenWidth / 120) * Math.Sin(angle * Math.PI / 180F)), Line);
+                            canvas.DrawLine(xval, yval, (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F)), (float)((App.ScreenWidth / 120) * Math.Sin(angle * Math.PI / 180F)), Line);
                         if (polarity)
-                            canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1,2) + incr, xval - 7, yval + 4, PolarLetters);
+                            canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1,2) + incr, xval - (7 * percentDiff), yval + (4 * percentDiff), PolarLetters);
                         else
-                            canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1,2) + incr, xval - 7, yval + 4, NonPolarLetters);
+                            canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1,2) + incr, xval - (7 * percentDiff), yval + (4 * percentDiff), NonPolarLetters);
                         incr += 1;
                     }
-                    xval = (float)((App.ScreenWidth / 120) * Math.Cos(angle * Math.PI / 180F));
-                    yval = (float)((App.ScreenWidth / 120) * Math.Sin(angle * Math.PI / 180F));
+                    xval = (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F));
+                    yval = (float)((RADIUS * percentDiff) * Math.Sin(angle * Math.PI / 180F));
                     HelicalStructure.Add(new KeyValuePair<string, Point>(item.Substring(0, 1).ToString().ToUpper() + item.Substring(1, 2) + incr, new Point(xval, yval)));
                     if (incr % scaleModifier == 0)
                     {
                         modIncrementer += 1;
                         scaleModifier = scaleModifier + 18;
                     }
-                    xModifier = xval > 0 ? 13f * modIncrementer : -13f * modIncrementer;
-                    yModifier = yval > 0 ? 13f * modIncrementer : -13f * modIncrementer;
+                    xModifier = xval > 0 ? 13f * modIncrementer * percentDiff : -13f * modIncrementer * percentDiff;
+                    yModifier = yval > 0 ? 13f * modIncrementer * percentDiff : -13f * modIncrementer * percentDiff;
                     if (Math.Abs(xval) < 5 && modIncrementer > 0)
                     {
-                        yModifier = yModifier > 0 ? (yModifier - .5f) + (6 * modIncrementer) : (yModifier + .5f) - (6 * modIncrementer);
+                        yModifier = yModifier > 0 ? (yModifier - (.5f * percentDiff)) + (6 * modIncrementer * percentDiff) : (yModifier + (.5f * percentDiff)) - (6 * modIncrementer * percentDiff);
                         xModifier = 0;
                     }
                     xval += xModifier;
@@ -239,13 +238,13 @@ namespace Helical_Wheel_App
                     if (aminoClass.IsAminoAcid(item))
                     {
                         if (polarity = aminoClass.IsPolar(item))
-                            canvas.DrawCircle(xval, yval, (App.ScreenWidth / 120), PolarAminoAcid);
+                            canvas.DrawCircle(xval, yval, (AMINORADIUS * percentDiff), PolarAminoAcid);
                         else
-                            canvas.DrawCircle(xval, yval, (App.ScreenWidth / 120), NonPolarAminoAcid);
+                            canvas.DrawCircle(xval, yval, (AMINORADIUS * percentDiff), NonPolarAminoAcid);
                     }
                     else
                     {
-                        canvas.DrawCircle(xval, yval, (App.ScreenWidth / 120), InvalidAminoAcid);
+                        canvas.DrawCircle(xval, yval, (AMINORADIUS * percentDiff), InvalidAminoAcid);
                     }
                     angle += 100;
                     if (angle > 360)
@@ -256,9 +255,9 @@ namespace Helical_Wheel_App
             if (!string.IsNullOrWhiteSpace(lastAmino))
             {
                 if (polarity)
-                    canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1, 2) + incr, xval - 7, yval + 4, PolarLetters);
+                    canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1, 2) + incr, xval - (7 * percentDiff), yval + (4 * percentDiff), PolarLetters);
                 else
-                    canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1, 2) + incr, xval - 7, yval + 4, NonPolarLetters);
+                    canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1, 2) + incr, xval - (7 * percentDiff), yval + (4 * percentDiff), NonPolarLetters);
             }
         }
     }
