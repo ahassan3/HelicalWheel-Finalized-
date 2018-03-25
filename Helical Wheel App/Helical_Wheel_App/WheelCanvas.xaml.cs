@@ -138,7 +138,7 @@ namespace Helical_Wheel_App
                     {
                         //draw line
                         if(incr < 18)
-                            canvas.DrawLine(x, y, (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F)), (float)((App.ScreenHeight / 8.863492) * Math.Sin(angle * Math.PI / 180F)), Line);
+                            canvas.DrawLine(x, y, (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F)), (float)((RADIUS * percentDiff) * Math.Sin(angle * Math.PI / 180F)), Line);
                         // check if polar or not then draw the circle accordingly
                         if (polarity)
                             canvas.DrawText(lastChar.ToString().ToUpper() + incr, x - (6 * percentDiff), y + (4 * percentDiff), PolarLetters);
@@ -211,7 +211,7 @@ namespace Helical_Wheel_App
                     if (!string.IsNullOrWhiteSpace(lastAmino))
                     {
                         if(incr < 18)
-                            canvas.DrawLine(xval, yval, (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F)), (float)((App.ScreenWidth / 120) * Math.Sin(angle * Math.PI / 180F)), Line);
+                            canvas.DrawLine(xval, yval, (float)((RADIUS * percentDiff) * Math.Cos(angle * Math.PI / 180F)), (float)((RADIUS * percentDiff) * Math.Sin(angle * Math.PI / 180F)), Line);
                         if (polarity)
                             canvas.DrawText(lastAmino.Substring(0, 1).ToString().ToUpper() + lastAmino.Substring(1,2) + incr, xval - (7 * percentDiff), yval + (4 * percentDiff), PolarLetters);
                         else
