@@ -14,6 +14,8 @@
         <Label x:Name="Errors" IsVisible="False" TextColor ="Red"/>
         <Button x:Name="Button1" Text="Create Wheel" Clicked="Button_Click"/>
       </StackLayout>
+      <Label Text="Slide to enlarge or minimize helical wheel"/>
+      <Slider x:Name="WheelSlider" Maximum=".3" Minimum="-.3" Value="0"/>
       <ContentView x:Name="HelicalView"/>
       <Label x:Name="StructureAnalysis" IsVisible="False" TextColor ="Red" VerticalOptions="FillAndExpand"/>
       <ListView x:Name="listView" IsVisible="False"></ListView>

@@ -12,6 +12,7 @@ namespace Helical_Wheel_App
         private static int RADIUS = 90;
         private static int AMINORADIUS = 9;
         private static float ScaleFactor = 1.938889f;
+        private float WheelEnlarger = 0;
         private string AminoSequence = "";
         public List<KeyValuePair<string, Point>> HelicalStructure {get;set;}
         // specifying the colors for the various options on the graph
@@ -56,10 +57,11 @@ namespace Helical_Wheel_App
             Color = SKColors.Red,
             BlendMode = SKBlendMode.SrcATop
         };
-        public WheelCanvas(string aminoSeq)
+        public WheelCanvas(string aminoSeq, double enlargeVal)
         {
             AminoSequence = aminoSeq;
             HelicalStructure = new List<KeyValuePair<string, Point>>();
+            WheelEnlarger = (float)enlargeVal;
             InitializeComponent();
 
         }
@@ -72,7 +74,7 @@ namespace Helical_Wheel_App
             canvas.Clear(SKColors.WhiteSmoke);
             //canvasView.HeightRequest = .1 * App.ScreenHeight;
             // set width and height
-            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor);
+            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger;
             int width = args.Info.Width;
             int height = args.Info.Height;
             // translate the (0,0) point to the middle of the canvas
@@ -126,7 +128,7 @@ namespace Helical_Wheel_App
             float modIncrementer = 0;
             float scaleModifier = 19;
             int incr = 1;
-            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor);
+            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger;
             // iterate over the amino acids
             foreach (var item in listAminos)
             {
@@ -203,7 +205,7 @@ namespace Helical_Wheel_App
             bool polarity = false;
             string lastAmino ="";
             int incr = 1;
-            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor);
+            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger;
             foreach (var item in listAminos)
             {
                 if (!string.IsNullOrWhiteSpace(item))

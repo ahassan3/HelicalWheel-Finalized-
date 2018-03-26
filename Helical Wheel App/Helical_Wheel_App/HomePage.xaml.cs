@@ -26,6 +26,7 @@ namespace Helical_Wheel_App
             toolbar.Clicked += new EventHandler(RunAnalysisItem_Click);
             toolbar.Order = ToolbarItemOrder.Primary;
             // creating a second toolbar item
+            WheelSlider.ValueChanged += WheelSlider_ValueChanged;
             var toolbar2 = new ToolbarItem();
             toolbar2.AutomationId = "PreviousEntriesItem";
             toolbar2.Text = "Previous Entries";
@@ -47,6 +48,12 @@ namespace Helical_Wheel_App
                 DrawHelicalWheel();
             }
         }
+
+        private void WheelSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            DrawHelicalWheel();
+        }
+
         void Button_Click(object sender, EventArgs e)
         {
             // if the create wheel button is clicked
@@ -63,6 +70,7 @@ namespace Helical_Wheel_App
             {
                 // hide the stacklayout
                 AminoEntry.IsVisible = false;
+                WheelSlider.IsVisible = false;
                 // get the content
                 var content = (WheelCanvas)HelicalView.Content;
                 // run the analysis
@@ -73,6 +81,7 @@ namespace Helical_Wheel_App
             {
                 StructureAnalysis.IsVisible = false;
                 AminoEntry.IsVisible = true;
+                WheelSlider.IsVisible = true;
                 toolbar.Text = "Evaluate Structure";
 
             }
@@ -94,7 +103,7 @@ namespace Helical_Wheel_App
                     ValidSequence = aminoClass.IsValidOneLetterAppreviation(aminoAcid);
                 if (ValidSequence)
                 {
-                    var contentView = new WheelCanvas(aminoAcid);
+                    var contentView = new WheelCanvas(aminoAcid, WheelSlider.Value);
                     contentView.HeightRequest = .55 * App.ScreenHeight;
                     var id = contentView.Id;
                     HelicalView.Content = contentView;
