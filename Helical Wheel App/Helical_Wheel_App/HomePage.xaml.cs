@@ -47,6 +47,7 @@ namespace Helical_Wheel_App
                 AminoAcidEditor.Text = AminoSeq;
                 DrawHelicalWheel();
             }
+            Content = new ScrollView { Content = MainView };
         }
 
         private void WheelSlider_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -70,7 +71,6 @@ namespace Helical_Wheel_App
             {
                 // hide the stacklayout
                 AminoEntry.IsVisible = false;
-                WheelSlider.IsVisible = false;
                 // get the content
                 var content = (WheelCanvas)HelicalView.Content;
                 // run the analysis
@@ -81,7 +81,6 @@ namespace Helical_Wheel_App
             {
                 StructureAnalysis.IsVisible = false;
                 AminoEntry.IsVisible = true;
-                WheelSlider.IsVisible = true;
                 toolbar.Text = "Evaluate Structure";
 
             }
@@ -96,6 +95,7 @@ namespace Helical_Wheel_App
             string aminoAcid = AminoAcidEditor.Text;
             if (!string.IsNullOrWhiteSpace(aminoAcid))
             {
+
                 bool ValidSequence = true;
                 if (aminoAcid.Contains(","))
                     ValidSequence = aminoClass.IsValidThreeLetterAppreviation(aminoAcid);
@@ -104,7 +104,7 @@ namespace Helical_Wheel_App
                 if (ValidSequence)
                 {
                     var contentView = new WheelCanvas(aminoAcid, WheelSlider.Value);
-                    contentView.HeightRequest = .55 * App.ScreenHeight;
+                    contentView.HeightRequest = .85 * App.ScreenHeight;
                     var id = contentView.Id;
                     HelicalView.Content = contentView;
                     HelicalView.IsVisible = true;
@@ -204,8 +204,6 @@ namespace Helical_Wheel_App
                 StructureAnalysis.TextColor = Color.ForestGreen;
             }
             StructureAnalysis.IsVisible = true;
-            Content = new ScrollView { Content = MainView };
-            //StructureAnalysis.HeightRequest = .40 * App.ScreenHeight;
         }
         private void AddEntry()
         {

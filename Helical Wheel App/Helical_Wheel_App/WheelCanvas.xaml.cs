@@ -74,7 +74,7 @@ namespace Helical_Wheel_App
             canvas.Clear(SKColors.WhiteSmoke);
             //canvasView.HeightRequest = .1 * App.ScreenHeight;
             // set width and height
-            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger;
+            var percentDiff = App.ScreenHeight > App.ScreenWidth ? ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger : ((App.ScreenWidth / App.ScreenHeight) / ScaleFactor) + WheelEnlarger;
             int width = args.Info.Width;
             int height = args.Info.Height;
             // translate the (0,0) point to the middle of the canvas
@@ -128,7 +128,7 @@ namespace Helical_Wheel_App
             float modIncrementer = 0;
             float scaleModifier = 19;
             int incr = 1;
-            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger;
+            var percentDiff = App.ScreenHeight > App.ScreenWidth ? ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger: ((App.ScreenWidth / App.ScreenHeight) / ScaleFactor) + WheelEnlarger;
             // iterate over the amino acids
             foreach (var item in listAminos)
             {
@@ -205,7 +205,7 @@ namespace Helical_Wheel_App
             bool polarity = false;
             string lastAmino ="";
             int incr = 1;
-            var percentDiff = ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger;
+            var percentDiff = App.ScreenHeight > App.ScreenWidth ? ((App.ScreenHeight / App.ScreenWidth) / ScaleFactor) + WheelEnlarger : ((App.ScreenWidth / App.ScreenHeight) / ScaleFactor) + WheelEnlarger;
             foreach (var item in listAminos)
             {
                 if (!string.IsNullOrWhiteSpace(item))

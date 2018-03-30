@@ -53,6 +53,7 @@ namespace Helical_Wheel_App
             ProteinList = proteins;
             ListID = listView.Id.ToString();
             listView.Refreshing += ListView_Refreshing;
+            listView.HasUnevenRows = true;
             listView.ItemsSource = proteins;
             listView.SeparatorColor = Color.Black;
             listView.ItemTemplate = new DataTemplate(() =>
@@ -65,7 +66,6 @@ namespace Helical_Wheel_App
                 AminoSequenceLabel.SetBinding(Label.TextProperty,
                     new Binding("AminoSequence", BindingMode.OneWay,
                         null, null,"Sequence: {0:N}"));
-                AminoSequenceLabel.WidthRequest = .96 * App.ScreenWidth;
                 // Return an assembled ViewCell.
                 return new ViewCell
                 {
