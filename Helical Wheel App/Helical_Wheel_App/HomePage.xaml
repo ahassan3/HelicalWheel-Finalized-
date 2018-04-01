@@ -17,7 +17,7 @@
             <Slider x:Name="WheelSlider" Maximum=".3" Minimum="-.3" Value="0"/>
         </StackLayout>
         <ContentView x:Name="HelicalView"/>
-      <Label x:Name="StructureAnalysis" IsVisible="False" TextColor ="Red" VerticalOptions="FillAndExpand"/>
-      <ListView x:Name="listView" IsVisible="False"></ListView>
+        <Label x:Name="StructureAnalysis" IsVisible="False" TextColor ="Red" VerticalOptions="FillAndExpand" FontSize="Large"/>
+        <ListView x:Name="listView" IsVisible="False"></ListView>
     </StackLayout>
 </ContentPage>

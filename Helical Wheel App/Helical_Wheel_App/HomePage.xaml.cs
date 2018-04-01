@@ -109,6 +109,15 @@ namespace Helical_Wheel_App
                     HelicalView.Content = contentView;
                     HelicalView.IsVisible = true;
                     Errors.IsVisible = false;
+                    try
+                    {
+                        ((ScrollView)Content).ScrollToAsync(0, App.ScreenHeight, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Content = new ScrollView { Content = MainView};
+                        ((ScrollView)Content).ScrollToAsync(0, App.ScreenHeight, true);
+                    }
                 }
                 else
                 {
